@@ -7,4 +7,4 @@ export function processWeatherData(data) {
         humidity: current.humidity, 
         windspeed: current.windspeed
     }; 
-}
+}                       
