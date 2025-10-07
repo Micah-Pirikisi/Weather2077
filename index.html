@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather2077</title>
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./script.js" defer></script>
+</head>
+<body>
+    <form id="weather-form">
+        <input type="text" id="location-inout" placeholder="Enter city..." required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    <div id="loading" class="hidden">Loading...</div>
+
+    <div class="hologram hidden" id="weather-display">
+        <div class="glitch" id="location" data-text=""></div>
+        <div id="weather-info"></div>
+    </div>
+</body>
+</html>
