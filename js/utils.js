@@ -7,4 +7,20 @@ export function processWeatherData(data) {
         humidity: current.humidity, 
         windspeed: current.windspeed
     }; 
-}                       
+}
+
+export function getIconForCondition(condition) {
+  const conditionMap = {
+    "Clear": "../assets/streamline-ultimate--weather-sun-bold.svg",
+    "Partially cloudy": "../assets/arcticons--weather.svg",
+    "Cloudy": "../assets/fluent--weather-cloudy-24-regular.svg",
+    "Rain": "../assets/wi--rain-wind.svg",
+    "Showers": "../assets/arcticons--weather-alt-2.svg",
+    "Snow": "../assets/wi--snowflake-cold.svg",
+    "Fog": "../assets/fluent--weather-haze-48-regular.svg",
+    "Thunderstorm": "../assets/wi--thunderstorm.svg",
+  };
+
+  const iconFile = conditionMap[condition] || "streamline-ultimate--weather-sun-bold.svg";
+  return `./assets/${iconFile}`;
+}

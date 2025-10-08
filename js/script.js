@@ -1,5 +1,5 @@
 import { fetchWeather } from "./api.js";
-import { processWeatherData } from "./utils.js";
+import { processWeatherData, getIconForCondition } from "./utils.js";
 
 const form = document.getElementById("weather-form");
 const input = document.getElementById("location-input");
@@ -8,10 +8,24 @@ const display = document.getElementById("weather-display");
 const locationEl = document.getElementById("location");
 const weatherInfoEl = document.getElementById("weather-info");
 
-function renderWeather(data) {
+async function loadInlineSVG(iconPath) {
+  const response = await fetch(iconPath);
+  return await response.text();
+}
+
+async function renderWeather(data) {
   locationEl.innerText = data.location;
   locationEl.setAttribute("data-text", data.location);
+
+  const iconPath = getIconForCondition(data.conditions);
+  const svgMarkup = await loadInlineSVG(iconPath);
+
   weatherInfoEl.innerHTML = `
+        <div class="weather-icon-wrapper">
+            <div class="weather-icon glitch-red">${svgMarkup}</div>
+            <div class="weather-icon glitch-blue">${svgMarkup}</div>
+            <div class="weather-icon">${svgMarkup}</div>
+        </div>
         <p>Temp: ${data.temperature}°C</p>
         <p>Condition: ${data.conditions}</p>
         <p>Humidity: ${data.humidity}%</p>
@@ -31,7 +45,7 @@ form.addEventListener("submit", async (e) => {
     const rawData = await fetchWeather(location);
     const cleanedData = processWeatherData(rawData);
     console.log("[Cleaned Weather Data]", cleanedData);
-    renderWeather(cleanedData);
+    await renderWeather(cleanedData);
   } catch (e) {
     weatherInfoEl.innerHTML = "<p>Failed to load weather data.</p>";
   }

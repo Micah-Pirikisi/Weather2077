@@ -1,0 +1,230 @@
+/* Base Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Orbitron", sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  color: #00fff7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding-top: 50px;
+}
+
+/* Form Styling */
+form {
+  background: #111;
+  padding: 20px 30px;
+  border: 1px solid #00fff7;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #00fff7;
+  display: flex;
+  gap: 10px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 200px;
+  font-size: 16px;
+  outline: none;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  background: #00fff7;
+  color: #000;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #00cfc3;
+}
+
+/* Loading Spinner */
+#loading {
+  margin-top: 20px;
+  font-size: 18px;
+  animation: pulse 1s infinite alternate;
+  color: #fff;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+/* Weather Display */
+#weather-display {
+  margin-top: 30px;
+  padding: 25px;
+  border-radius: 12px;
+  background: rgba(0, 255, 247, 0.1);
+  border: 1px solid #00fff7;
+  width: 300px;
+  box-shadow: 0 0 20px #00fff7;
+  text-align: center;
+}
+
+.weather-icon-wrapper {
+    display: inline-block;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 10px;
+}
+
+.weather-icon {
+  position: absolute;
+  display: block; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  fill: #00fff7; 
+  stroke: #00fff7; 
+  filter: drop-shadow(0 0 5px #00fff7);
+}
+
+.weather-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.weather-icon.glitch-red {
+  fill: #f0f;
+  stroke: #f0f;
+  filter: drop-shadow(0 0 2px #f0f);
+  opacity: 0.6;
+  animation: glitchImageRed 1.5s infinite;
+}
+
+.weather-icon.glitch-blue {
+  fill: #0ff;
+  stroke: #0ff;
+  filter: drop-shadow(0 0 2px #0ff);
+  opacity: 0.6;
+  animation: glitchImageBlue 1.5s infinite;
+}
+
+/* Keyframes for slight offset / glitch effect */
+@keyframes glitchImageRed {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-1px, 1px);
+  }
+  50% {
+    transform: translate(1px, -1px);
+  }
+  75% {
+    transform: translate(-2px, 2px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes glitchImageBlue {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(2px, -1px);
+  }
+  50% {
+    transform: translate(-1px, 1px);
+  }
+  75% {
+    transform: translate(1px, 1px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes glitchImage {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Glitch Location Title */
+.glitch {
+  position: relative;
+  font-size: 24px;
+  color: #00fff7;
+  margin-bottom: 15px;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  color: #f0f;
+  clip: rect(0, 0, 0, 0);
+}
+
+.glitch::before {
+  animation: glitchTop 1.5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  color: #0ff;
+  animation: glitchBottom 1.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitchTop {
+  0% {
+    clip: rect(2px, 9999px, 8px, 0);
+    transform: translate(-2px, -2px);
+  }
+  100% {
+    clip: rect(10px, 9999px, 15px, 0);
+    transform: translate(2px, 2px);
+  }
+}
+
+@keyframes glitchBottom {
+  0% {
+    clip: rect(16px, 9999px, 22px, 0);
+    transform: translate(2px, 2px);
+  }
+  100% {
+    clip: rect(24px, 9999px, 30px, 0);
+    transform: translate(-2px, -2px);
+  }
+}
+
+/* Weather Info */
+#weather-info p {
+  margin: 8px 0;
+  font-size: 16px;
+  color: #fff;
+}
