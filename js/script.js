@@ -8,39 +8,62 @@ const display = document.getElementById("weather-display");
 const locationEl = document.getElementById("location");
 const weatherInfoEl = document.getElementById("weather-info");
 
+
 async function loadInlineSVG(iconPath) {
-  const response = await fetch(iconPath);
-  return await response.text();
+    const response = await fetch(iconPath);
+    return await response.text();
 }
 
 async function renderWeather(data) {
-  locationEl.innerText = data.location;
-  locationEl.setAttribute("data-text", data.location);
-
-  const iconPath = getIconForCondition(data.conditions);
-  const svgMarkup = await loadInlineSVG(iconPath);
-
-  weatherInfoEl.innerHTML = `
-        <div class="weather-icon-wrapper">
-            <div class="weather-icon glitch-red">${svgMarkup}</div>
-            <div class="weather-icon glitch-blue">${svgMarkup}</div>
-            <div class="weather-icon">${svgMarkup}</div>
+    locationEl.innerText = data.location;
+    locationEl.setAttribute("data-text", data.location);
+    
+    const iconPath = getIconForCondition(data.conditions);
+    const svgMarkup = await loadInlineSVG(iconPath);
+    
+    weatherInfoEl.innerHTML = `
+    <div class="weather-icon-wrapper">
+    <div class="weather-icon glitch-red">${svgMarkup}</div>
+    <div class="weather-icon glitch-blue">${svgMarkup}</div>
+    <div class="weather-icon">${svgMarkup}</div>
+    </div>
+    <p>Temp: ${data.temperature}°C</p>
+    <p>Condition: ${data.conditions}</p>
+    <p>Humidity: ${data.humidity}%</p>
+    <p>Wind: ${data.windspeed} km/h</p>
+    `;
+    
+    const hourlyHTML = data.hourlyForecast
+      .map((hour) => {
+        const iconPath = getIconForCondition(hour.condition); // reuse your icon map
+        const hourFormatted = hour.time.split(":")[0] + ":00";
+    
+        return `
+        <div class="forecast-hour">
+          <div class="forecast-time">${hourFormatted}</div>
+          <div class="forecast-icon">
+            <img src="${iconPath}" alt="${hour.condition}" />
+          </div>
+          <div class="forecast-temp">${hour.temp}°C</div>
         </div>
-        <p>Temp: ${data.temperature}°C</p>
-        <p>Condition: ${data.conditions}</p>
-        <p>Humidity: ${data.humidity}%</p>
-        <p>Wind: ${data.windspeed} km/h</p>
+      `;
+      })
+      .join("");
+    
+    document.getElementById("hourly-forecast").innerHTML = `
+      <h3>Next 12 Hours</h3>
+      <div class="forecast-grid">${hourlyHTML}</div>
     `;
 }
 
 form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const location = input.value.trim();
-  if (!location) return;
-
-  display.classList.add("hidden");
-  loading.classList.remove("hidden");
-
+    e.preventDefault();
+    const location = input.value.trim();
+    if (!location) return;
+    
+    display.classList.add("hidden");
+    loading.classList.remove("hidden");
+    
   try {
     const rawData = await fetchWeather(location);
     const cleanedData = processWeatherData(rawData);

@@ -123,6 +123,48 @@ button:hover {
   animation: glitchImageBlue 1.5s infinite;
 }
 
+/* forecast panel */ 
+.forecast-panel {
+  margin-top: 30px;
+  text-align: center;
+  color: #00fff7;
+}
+
+.forecast-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 10px 0;
+  gap: 16px;
+  scrollbar-width: thin;
+}
+
+.forecast-hour {
+  background: rgba(0, 255, 247, 0.1);
+  border: 1px solid #00fff7;
+  border-radius: 10px;
+  padding: 10px;
+  min-width: 80px;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px #00fff7;
+}
+
+.forecast-time {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.forecast-icon img {
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 0 4px #00fff7);
+  margin-bottom: 6px;
+}
+
+.forecast-temp {
+  font-size: 14px;
+}
+
 /* Keyframes for slight offset / glitch effect */
 @keyframes glitchImageRed {
   0% {
